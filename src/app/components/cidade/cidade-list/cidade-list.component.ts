@@ -1,26 +1,32 @@
 import { NgFor } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Cidade } from '../../../models/Cidade.model';
-import { CidadeService } from '../../../services/Cidade.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { RouterModule } from '@angular/router';
+import { Cidade } from '../../../models/cidade.model';
+import { CidadeService } from '../../../services/cidade.service';
 
 @Component({
-  selector: 'app-Cidade-list',
+  selector: 'app-cidade-list',
   standalone: true,
-  imports: [NgFor],
-  templateUrl: './Cidade-list.component.html',
-  styleUrl: './Cidade-list.component.css'
+  imports: [NgFor, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule],
+  templateUrl: './cidade-list.component.html',
+  styleUrl: './cidade-list.component.css'
 })
 export class CidadeListComponent implements OnInit {
-  Cidades: Cidade[] = [];
+  cidades: Cidade[] = [];
+  displayedColumns: string[] = ['id', 'nome', 'sigla', 'acao'];
 
-  constructor(private CidadeService: CidadeService){
+  constructor(private cidadeService: CidadeService) {
 
   }
 
   ngOnInit(): void {
-      this.CidadeService.getCidades().subscribe(
-        data => { this.Cidades = data}
-      );
+    this.cidadeService.findAll().subscribe(
+      data => { this.cidades = data }
+    );
   }
 
 }

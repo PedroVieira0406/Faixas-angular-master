@@ -13,11 +13,11 @@ export class EstadoService {
   }
 
   findAll(): Observable<Estado[]> {
-    return this.httpClient.get<Estado[]>(this.baseUrl); 
+    return this.httpClient.get<Estado[]>(this.baseUrl);
   }
 
-  findById(id: number): Observable<Estado> {
-    return this.httpClient.get<Estado>(`${this.baseUrl}/${id}`); 
+  findById(id: string): Observable<Estado> {
+    return this.httpClient.get<Estado>(`${this.baseUrl}/${id}`);
   }
 
   insert(estado: Estado): Observable<Estado> {
@@ -25,11 +25,12 @@ export class EstadoService {
   }
 
   update(estado: Estado): Observable<Estado> {
-    return this.httpClient.put<any>(`${this.baseUrl}/${estado.id}`, estado); 
+    return this.httpClient.put<any>(`${this.baseUrl}/${estado.id}`, estado);
   }
 
-  delete(id: number): Observable<any>{
-    return this.httpClient.delete<any>(`${this.baseUrl}/${id}`); 
+  delete(estado: Estado): Observable<any>{
+    return this.httpClient.delete<any>(`${this.baseUrl}/${estado.id}`);
   }
+  
 
 }

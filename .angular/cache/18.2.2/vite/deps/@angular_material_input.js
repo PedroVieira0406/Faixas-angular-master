@@ -1,10 +1,4 @@
 import {
-  FormGroupDirective,
-  NgControl,
-  NgForm,
-  Validators
-} from "./chunk-6GY2CKXR.js";
-import {
   MAT_FORM_FIELD,
   MatError,
   MatFormField,
@@ -27,6 +21,12 @@ import {
   getSupportedInputTypes,
   normalizePassiveListenerOptions
 } from "./chunk-VVM5YDBG.js";
+import {
+  FormGroupDirective,
+  NgControl,
+  NgForm,
+  Validators
+} from "./chunk-6GY2CKXR.js";
 import {
   DOCUMENT
 } from "./chunk-A6ATXITA.js";

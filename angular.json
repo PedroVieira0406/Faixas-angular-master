@@ -60,10 +60,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "livros-angular:build:production"
+              "buildTarget": "faixas-angular:build:production"
             },
             "development": {
-              "buildTarget": "livros-angular:build:development"
+              "buildTarget": "faixas-angular:build:development"
             }
           },
           "defaultConfiguration": "development"
