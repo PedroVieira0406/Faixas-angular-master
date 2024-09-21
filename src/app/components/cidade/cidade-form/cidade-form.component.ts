@@ -27,12 +27,12 @@ export class CidadeFormComponent {
     private cidadeService: CidadeService,
     private router: Router,
     private activatedRoute: ActivatedRoute) {
-
       const cidade: Cidade = this.activatedRoute.snapshot.data['cidade'];
 
       this.formGroup = this.formBuilder.group({
         id: [(cidade && cidade.id) ? cidade.id : null],
-        nome: [(cidade && cidade.nome) ? cidade.nome : '', Validators.required]
+        nome: [(cidade && cidade.nome) ? cidade.nome : '', Validators.required],
+        estado: [(cidade && cidade.estado) ? cidade.estado: '', Validators.required]
     })
   }
 
@@ -52,44 +52,47 @@ export class CidadeFormComponent {
   }
 */
 
-  salvar() {
-    if (this.formGroup.valid) {
-      const cidade = this.formGroup.value;
-      if (cidade.id == null) {
-        this.cidadeService.insert(cidade).subscribe({
-          next: (cidadeCadastrado) => {
-            this.router.navigateByUrl('/cidades')
-          },
-          error: (errorResponse) => {
-            console.log('Erro ao salvar' + JSON.stringify(errorResponse));
-          }
-        });
-      } else {
-        this.cidadeService.update(cidade).subscribe({
-          next: (cidadeAlterado) => {
-            this.router.navigateByUrl('/cidades');
-          },
-          error: (err) => {
-            console.log('Erro ao alterar' + JSON.stringify(err));
-          }
-        });
-      }
-    }
-  }
+salvar() {
+  if (this.formGroup.valid) {
+    const cidade = this.formGroup.value;
 
-  excluir() {
-    if (this.formGroup.valid) {
-      const cidade = this.formGroup.value;
-      if (cidade.id != null) {
-        this.cidadeService.delete(cidade).subscribe({
-          next: () => {
-            this.router.navigateByUrl('/cidades');
-          },
-          error: (err) => {
-            console.log('Erro ao excluir' + JSON.stringify(err));
-          }
-        });
-      }
+    if (cidade.id == null) {
+      // Criando nova cidade
+      this.cidadeService.insert(cidade).subscribe({
+        next: () => {
+          this.router.navigateByUrl('/cidades');
+        },
+        error: (errorResponse) => {
+          console.error('Erro ao salvar: ', errorResponse);
+        }
+      });
+    } else {
+      // Atualizando cidade existente
+      this.cidadeService.update(cidade).subscribe({
+        next: () => {
+          this.router.navigateByUrl('/cidades');
+        },
+        error: (err) => {
+          console.error('Erro ao alterar: ', err);
+        }
+      });
     }
   }
 }
+
+excluir() {
+  if(this.formGroup.valid){
+  const cidade = this.formGroup.value;
+
+  if (cidade.id != null) {
+    // Excluindo cidade por id
+    this.cidadeService.delete(cidade.id).subscribe({
+      next: () => {
+        this.router.navigateByUrl('/cidades');
+      },
+      error: (err) => {
+        console.error('Erro ao excluir: ', err);
+      }
+    });
+  }}
+}}

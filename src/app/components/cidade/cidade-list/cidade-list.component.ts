@@ -17,7 +17,7 @@ import { CidadeService } from '../../../services/cidade.service';
 })
 export class CidadeListComponent implements OnInit {
   cidades: Cidade[] = [];
-  displayedColumns: string[] = ['id', 'nome', 'sigla', 'acao'];
+  displayedColumns: string[] = ['id', 'nome','estado', 'acao'];
 
   constructor(private cidadeService: CidadeService) {
 
@@ -29,4 +29,15 @@ export class CidadeListComponent implements OnInit {
     );
   }
 
+  excluir(cidade: Cidade): void {
+    this.cidadeService.delete(cidade).subscribe({
+      next: () => {
+        this.cidades = this.cidades.filter(e => e.id !== cidade.id);
+      },
+      error: (err) => {
+        console.error("Erro ao tentar excluir o cidade", err);
+      }
+
+    });
+  }
 }

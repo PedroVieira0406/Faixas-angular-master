@@ -53,44 +53,45 @@ export class EstadoFormComponent {
   }
 */
 
-  salvar() {
-    if (this.formGroup.valid) {
-      const estado = this.formGroup.value;
-      if (estado.id == null) {
-        this.estadoService.insert(estado).subscribe({
-          next: (estadoCadastrado) => {
-            this.router.navigateByUrl('/estados')
-          },
-          error: (errorResponse) => {
-            console.log('Erro ao salvar' + JSON.stringify(errorResponse));
-          }
-        });
-      } else {
-        this.estadoService.update(estado).subscribe({
-          next: (estadoAlterado) => {
-            this.router.navigateByUrl('/estados');
-          },
-          error: (err) => {
-            console.log('Erro ao alterar' + JSON.stringify(err));
-          }
-        });
-      }
-    }
-  }
+salvar() {
+  if (this.formGroup.valid) {
+    const estado = this.formGroup.value;
 
-  excluir() {
-    if (this.formGroup.valid) {
-      const estado = this.formGroup.value;
-      if (estado.id != null) {
-        this.estadoService.delete(estado).subscribe({
-          next: () => {
-            this.router.navigateByUrl('/estados');
-          },
-          error: (err) => {
-            console.log('Erro ao excluir' + JSON.stringify(err));
-          }
-        });
-      }
+    if (estado.id == null) {
+      // Criando novo estado
+      this.estadoService.insert(estado).subscribe({
+        next: () => {
+          this.router.navigateByUrl('/estados');
+        },
+        error: (errorResponse) => {
+          console.error('Erro ao salvar: ', errorResponse);
+        }
+      });
+    } else {
+      // Atualizando estado existente
+      this.estadoService.update(estado).subscribe({
+        next: () => {
+          this.router.navigateByUrl('/estados');
+        },
+        error: (err) => {
+          console.error('Erro ao alterar: ', err);
+        }
+      });
     }
   }
+}
+
+excluir() {
+  const estado = this.formGroup.value;
+  if (estado.id != null) {
+    this.estadoService.delete(estado.id).subscribe({
+      next: () => {
+        this.router.navigateByUrl('/estados');
+      },
+      error: (err) => {
+        console.error('Erro ao excluir: ', err);
+      }
+    });
+  }
+}
 }

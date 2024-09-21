@@ -35,7 +35,7 @@ export class EstadoListComponent implements OnInit {
         this.estados = this.estados.filter(e => e.id !== estado.id);
       },
       error: (err) => {
-        console.error("Erro ao tentar ecluir o estado", err);
+        console.error("Erro ao tentar excluir o estado", err);
       }
 
     });
